@@ -348,3 +348,322 @@ comprobarIndice i xs | i == length xs = 0
 sumarSoloIndicesPares :: [Int] -> Int 
 
 sumarSoloIndicesPares xs = comprobarIndice 0 xs 
+
+------------------------------
+
+-- 7.a
+
+paratodo' :: [a] -> (a -> Bool) -> Bool 
+
+paratodo' [] f = True 
+paratodo' (x:xs) f = (f x) && paratodo' xs f 
+
+-- 7.b
+
+existe' :: [a] -> (a -> Bool) -> Bool 
+
+existe' [] f = False 
+existe' (x:xs) f = (f x) || paratodo' xs f 
+
+-- 7.c
+
+sumatoria' :: [a] -> (a -> Int) -> Int 
+
+sumatoria' [] f = 0 
+sumatoria' (x:xs) f = (f x) + sumatoria' xs f 
+
+-- 7.d 
+
+productoria' :: [a] -> (a -> Int) -> Int 
+
+productoria' [] f = 1 
+productoria' (x:xs) f = (f x) * productoria' xs f
+
+------------------------------
+
+-- 8. 
+
+-- paratodo' [0, 2, 1] esCero 
+-- False 
+
+-- paratodo' [0, 0, 0] esCero 
+-- True 
+
+-- paratodo' [-1, 2, 3] esPositivo 
+-- False 
+
+-- paratodo' [1, 2, 3] esPositivo
+-- True 
+
+-- paratodo' "texto" esVocal 
+-- False 
+
+-- paratodo' "aei" esVocal 
+-- True 
+
+-- existe' [1, 2, 3] esCero 
+-- False 
+
+-- existe' [0, 2, 3] esCero 
+-- True 
+
+-- existe' [-1, -2, -3] esPositivo
+-- False 
+
+-- existe' [-3, 2, -1] esPositivo
+-- True 
+
+-- existe' "rythm" esVocal
+-- False 
+
+-- existe' "ritmo" esVocal
+-- True 
+
+-- sumatoria' [-1, 5, -2] valorAbsoluto 
+-- 8 
+
+-- sumatoria' [-1, -2, 0] valorAbsoluto 
+-- 3 
+
+-- productoria' [-1, -2, -3] valorAbsoluto
+-- 6
+
+-- productoria' [0, 2, -3] valorAbsoluto
+-- 0
+
+------------------------------
+
+-- 9.a. 
+
+-- Podemos definir una función o usar una función lambda
+
+esImpar :: Int -> Bool 
+
+esImpar x = x `mod` 2 /= 0 
+
+todosPares :: [Int] -> Bool 
+
+todosPares xs = length (filter esImpar xs) == 0 
+
+todosPares' :: [Int] -> Bool  
+
+todosPares' xs = length (filter (\x -> x `mod` 2 /= 0) xs) == 0
+
+-- todosPares [1, 3, 5]
+-- False 
+
+-- todosPares [4, 6]
+-- True
+
+-- 9.b. 
+
+restoCero :: Int -> Int -> Bool 
+
+restoCero z x = z `mod` x == 0 
+
+hayMultiplo :: Int -> [Int] -> Bool 
+
+hayMultiplo z xs = length ( filter ( restoCero z ) xs ) > 0
+
+hayMultiplo' :: Int -> [Int] -> Bool 
+
+hayMultiplo' z xs = length ( filter (\ x -> z `mod` x == 0 ) xs ) > 0
+
+-- hayMultiplo 4 [5, 3]
+-- False
+
+-- hayMultiplo 4 [2, 3]
+-- True 
+
+-- 9.c.
+
+sumaCuadrados :: Int -> Int 
+
+sumaCuadrados n = sumatoria (map (^2) [0..n])
+
+-- 9.d.
+
+existeDivisor :: Int -> [Int] -> Bool 
+
+existeDivisor n ls = length (filter (restoCero n) ls) > 0
+
+existeDivisor' :: Int -> [Int] -> Bool 
+
+existeDivisor' n ls = length (filter (\ x -> n `mod` x == 0) ls) > 0
+
+-- existeDivisor 9 [10, 5]
+-- False 
+
+-- existeDivisor 9 [3, 5]
+-- True
+
+-- 9.e.
+
+esPrimo :: Int -> Bool 
+
+esPrimo n = length (filter (restoCero n) [2..(n-1)]) == 0 
+
+esPrimo' :: Int -> Bool 
+
+esPrimo' n = length (filter (\x -> x `mod` n == 0) [2..(n-1)]) == 0
+
+-- esPrimo 4 
+-- False 
+
+-- esPrimo 5 
+-- True
+
+-- 9.f.
+
+factorial'' :: Int -> Int 
+
+factorial'' n = productoria [1..n]
+
+-- factorial'' 3 
+-- 6
+
+-- factorial'' 4
+-- 24
+
+-- 9.g. 
+
+multiplicaPrimos :: [Int] -> Int 
+
+multiplicaPrimos xs = productoria ( filter esPrimo xs )
+
+-- multiplicaPrimos [1, 4, 8]
+-- 1
+
+-- multiplicaPrimos [4, 5, 11]
+-- 55
+
+-- 9.h. 
+
+fib :: Int -> Int 
+
+fib 0 = 0 
+fib 1 = 1 
+fib n = (n - 1) + (n - 2)
+
+esFib :: Int -> Bool 
+
+esFib n = length ( filter (\x -> x == n) [0..(fib n)] ) > 0
+
+-- esFib (-1)
+-- False 
+
+-- esFib 1
+-- True
+
+-- 9.i.
+
+todosFib :: [Int] -> Bool 
+
+todosFib xs = paratodo' xs esFib
+
+-- todosFib (0, 1, (-1))
+-- False
+
+-- todosFib [0, 1]
+-- True
+
+------------------------------
+
+-- 10.a. 
+
+duplicarValores :: [Int] -> [Int]
+
+duplicarValores [] = []
+duplicarValores (x:xs) = (x * 2) : duplicarValores xs
+
+-- 10.b. 
+
+duplicarValores' :: [Int] -> [Int]
+
+duplicarValores' xs = map (* 2) xs
+
+-- duplicarValores [2, 4]
+-- [4, 8]
+
+-- duplicarValores' [3, 6]
+-- [6, 12]
+
+------------------------------
+
+-- 11.a. 
+
+listaDePrimos :: [Int] -> [Int]
+
+listaDePrimos [] = []
+listaDePrimos (x:xs) | esPrimo x = x : listaDePrimos xs 
+                     | otherwise = listaDePrimos xs 
+
+-- listaDePrimos [1, 3, 4]
+-- [1, 3]
+
+-- listaDePrimos [10, 5, 6]
+-- [5]
+
+-- 11.b. 
+
+listaDePrimos' :: [Int] -> [Int]
+
+listaDePrimos' xs = filter esPrimo xs 
+
+-- listaDePrimos' [1, 3, 4]
+-- [1, 3]
+
+-- listaDePrimos' [10, 5, 6]
+-- [5]
+
+-- 12.a.
+
+primIgualesA :: Eq a => a -> [a] -> [a]
+
+primIgualesA z [] = []
+primIgualesA z (x:xs) | z == x = x : primIgualesA z xs 
+                      | z /= x = [] 
+
+-- primIgualesA 3 [3, 3, 4, 3]
+-- [3, 3]
+
+-- primIgualesA 'a' "aaadaa"
+-- "aaa"
+
+-- 12.b. 
+
+primIgualesA' :: Eq a => a -> [a] -> [a]
+
+primIgualesA' z xs = takeWhile (== z) xs
+
+-- primIgualesA' 3 [3, 3, 4, 3]
+-- [3, 3]
+
+-- primIgualesA' 'a' "aaadaa"
+-- "aaa"
+
+-- 13.a.
+
+primIguales :: Eq a => [a] -> [a]
+
+primIguales [] = []
+primIguales xs = takeWhile (== head xs) xs
+
+-- primIguales [4, 3, 3, 4, 1]
+-- [4]
+
+-- primIguales "aaadaa"
+-- "aaa"
+
+-- 13.b. 
+
+primIguales' :: Eq a => [a] -> [a]
+
+primIguales' [] = []
+primIguales' xs = primIgualesA (head xs) xs
+
+-- primIguales' [4, 3, 3, 4, 1]
+-- [4]
+
+-- primIguales' "aaadaa"
+-- "aaa"
