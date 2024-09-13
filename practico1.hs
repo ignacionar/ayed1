@@ -616,6 +616,8 @@ listaDePrimos' xs = filter esPrimo xs
 -- listaDePrimos' [10, 5, 6]
 -- [5]
 
+------------------------------
+
 -- 12.a.
 
 primIgualesA :: Eq a => a -> [a] -> [a]
@@ -641,6 +643,8 @@ primIgualesA' z xs = takeWhile (== z) xs
 
 -- primIgualesA' 'a' "aaadaa"
 -- "aaa"
+
+------------------------------
 
 -- 13.a.
 
